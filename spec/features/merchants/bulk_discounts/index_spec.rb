@@ -51,4 +51,24 @@ RSpec.describe "the merchant bulk discounts index" do
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}")
   end
+
+  it 'displays a section titled Upcoming Holidays with the next 3 US holidays' do
+    merchant_1 = Merchant.create!(name: "Staples")
+    bulk_discount_1 = merchant_1.bulk_discounts.create!(percentage_discount: 0.1, quantity_threshold: 10)
+    upcoming_holidays = PublicHolidaysFacade.find_holidays
+
+    holiday_1 = upcoming_holidays[0]
+    holiday_2 = upcoming_holidays[1]
+    holiday_3 = upcoming_holidays[2]
+
+    visit "/merchants/#{merchant_1.id}/bulk_discounts"
+
+    within ".upcoming-holidays" do
+      expect(page).to have_content("Upcoming Holidays")
+
+      expect(upcoming_holidays.length).to eq(3)
+      expect(holiday_1.name).to appear_before(holiday_2.name)
+      expect(holiday_2.name).to appear_before(holiday_3.name)
+    end
+  end
 end
