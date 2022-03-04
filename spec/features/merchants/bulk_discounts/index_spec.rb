@@ -60,16 +60,15 @@ RSpec.describe "the merchant bulk discounts index" do
     holiday_1 = upcoming_holidays[0]
     holiday_2 = upcoming_holidays[1]
     holiday_3 = upcoming_holidays[2]
-    holiday_4 = upcoming_holidays[3]
 
     visit "/merchants/#{merchant_1.id}/bulk_discounts"
 
     within ".upcoming-holidays" do
-      expect(page).to have_content("Upcoming Holdays")
+      expect(page).to have_content("Upcoming Holidays")
 
+      expect(upcoming_holidays.length).to eq(3)
       expect(holiday_1.name).to appear_before(holiday_2.name)
       expect(holiday_2.name).to appear_before(holiday_3.name)
-      expect(page).to_not have_content(holiday_4.name)
     end
   end
 end

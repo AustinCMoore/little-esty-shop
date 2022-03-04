@@ -6,7 +6,6 @@ RSpec.describe PublicHolidays do
       }
     public_holiday = PublicHolidays.new(data)
     expect(public_holiday).to be_an_instance_of(PublicHolidays)
-
   end
 
   it "has a name and a date" do
