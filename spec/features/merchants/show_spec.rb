@@ -122,4 +122,19 @@ RSpec.describe 'the merchant dashboard' do
       end
     end
   end
+
+  describe 'merchant bulk discounts' do
+    it 'links to a merchants bulk discount index page' do
+      bulk_discount_1 = @merchant_1.bulk_discounts.create!(percentage_discount: 0.1, quantity_threshold: 10)
+
+      visit "/merchants/#{@merchant_1.id}/dashboard"
+
+      within ".bulk-discounts" do
+        expect(page).to have_link('View Discounts')
+        click_link "View Discounts"
+      end
+
+      expect(current_path).to eq("/merchants/#{@merchant_1.id}/bulk_discounts")
+    end
+  end
 end

@@ -1,0 +1,7 @@
+<% @merchant.bulk_discounts.each_with_index do |bulk_discount, index| %>
+  <div class="bulk-discount-<%= index %>">
+    <h3> <%= link_to "Discount ID: #{bulk_discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{bulk_discount.id}" %> </h3>
+    <li> <%= "Discount %: #{bulk_discount.percentage_discount}" %> </li>
+    <li> <%= "Qty to qualify: #{bulk_discount.quantity_threshold}" %> </li>
+  </div>
+<% end %>
