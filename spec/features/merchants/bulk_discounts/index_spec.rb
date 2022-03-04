@@ -1,6 +1,6 @@
 require 'rails_helper'
 RSpec.describe "the merchant bulk discounts index" do
-  xit "exists" do
+  it "exists" do
     merchant_1 = Merchant.create!(name: "Staples")
 
     visit "/merchants/#{merchant_1.id}/bulk_discounts"
@@ -18,7 +18,7 @@ RSpec.describe "the merchant bulk discounts index" do
 
     visit "/merchants/#{merchant_1.id}/bulk_discounts"
 
-    within ".bulk-discount-#{bulk_discount_1.id}" do
+    within ".bulk-discount-0" do
       expect(page).to have_link("Discount ID: #{bulk_discount_1.id}")
       expect(page).to have_content("Discount %: #{bulk_discount_1.percentage_discount}")
       expect(page).to have_content("Qty to qualify: #{bulk_discount_1.quantity_threshold}")
@@ -28,7 +28,7 @@ RSpec.describe "the merchant bulk discounts index" do
     expect(page).to_not have_content("Discount %: #{bulk_discount_2.percentage_discount}")
     expect(page).to_not have_content("Qty to qualify: #{bulk_discount_2.quantity_threshold}")
 
-    within ".bulk-discount-#{bulk_discount_3.id}" do
+    within ".bulk-discount-1" do
       expect(page).to have_link("Discount ID: #{bulk_discount_3.id}")
       expect(page).to have_content("Discount %: #{bulk_discount_3.percentage_discount}")
       expect(page).to have_content("Qty to qualify: #{bulk_discount_3.quantity_threshold}")
@@ -45,7 +45,7 @@ RSpec.describe "the merchant bulk discounts index" do
 
     visit "/merchants/#{merchant_1.id}/bulk_discounts"
 
-    within ".bulk-discount-#{bulk_discount_1.id}" do
+    within ".bulk-discount-0" do
       click_link "Discount ID: #{bulk_discount_1.id}"
     end
 

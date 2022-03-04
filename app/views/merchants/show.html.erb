@@ -6,15 +6,11 @@
     <% @merchant.top_five_customers.each do |customer| %>
       <li><%= customer.name %>, <%= customer.trans_count %></li>
     <% end %>
-
   </ol>
-
-
 </div>
 
 <h2> Items ready to ship </h2>
 <div class="items-ready-to-ship">
-
   <% @merchant.ship_ready_items.each do |invoice_item| %>
     <li>
       <%= "#{invoice_item.item.name}" %>
@@ -24,4 +20,6 @@
   <% end %>
 </div>
 
- 
+<div class="bulk-discounts">
+  <%= link_to "View Discounts", "/merchants/#{@merchant.id}/bulk_discounts" %>
+</div>
