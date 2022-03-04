@@ -7,8 +7,12 @@ class ApplicationController < ActionController::Base
   # def contributors
   #   @contributors = ContributorFacade.find_contributor
   # end
-  # 
+  #
   # def pulls
   #   @pulls = PullsFacade.count_pulls
   # end
+
+  def next_3_holidays
+    @holidays = PublicHolidaysFacade.find_holidays
+  end
 end

@@ -5,3 +5,11 @@
     <li> <%= "Qty to qualify: #{bulk_discount.quantity_threshold}" %> </li>
   </div>
 <% end %>
+
+<div class="upcoming-holidays">
+  <h2> Upcoming Holidays </h2>
+  <%= @holidays.each do |holiday| %>
+    <h3> <%= holiday.name %> </h3>
+    <p> <%= holiday.date %> </p>
+  <% end %>
+</div>
