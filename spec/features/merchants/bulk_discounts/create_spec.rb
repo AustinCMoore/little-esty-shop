@@ -8,9 +8,9 @@ RSpec.describe "the merchant bulk discounts create page" do
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
 
     within ".new-discount" do
-      expect(page).to have_content("percentage discount") #may be diff name
-      expect(page).to have_content("quantity threshold") #may be diff name
-      expect(page).to have_button("Create Discount") #may be diff name
+      expect(page).to have_content("Percentage discount") #may be diff name
+      expect(page).to have_content("Quantity threshold") #may be diff name
+      expect(page).to have_button("Create Bulk discount") #may be diff name
     end
   end
 
@@ -21,7 +21,7 @@ RSpec.describe "the merchant bulk discounts create page" do
     within ".new-discount" do
       fill_in :bulk_discount_percentage_discount, with: 0.1
       fill_in :bulk_discount_quantity_threshold, with: 10
-      click_button "Create Discount"
+      click_button "Create Bulk discount"
     end
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts")
@@ -38,11 +38,11 @@ RSpec.describe "the merchant bulk discounts create page" do
 
     within ".new-discount" do
       fill_in :bulk_discount_quantity_threshold, with: 10
-      click_button "Create Discount"
+      click_button "Create Bulk discount"
     end
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
-    expect(page).to have_content("Discount not create: Required information missing.")
-    expect(page).to have_button("Create Discount") #may be diff name
+    expect(page).to have_content("Discount not created: Required information missing.")
+    expect(page).to have_button("Create Bulk discount") #may be diff name
   end
 
   it "cannot create a discount without a quantity_threshold" do
@@ -51,11 +51,11 @@ RSpec.describe "the merchant bulk discounts create page" do
 
     within ".new-discount" do
       fill_in :bulk_discount_percentage_discount, with: 0.1
-      click_button "Create Discount"
+      click_button "Create Bulk discount"
     end
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
-    expect(page).to have_content("Discount not create: Required information missing.")
-    expect(page).to have_button("Create Discount") #may be diff name
+    expect(page).to have_content("Discount not created: Required information missing.")
+    expect(page).to have_button("Create Bulk discount") #may be diff name
   end
 
   #does not accept strings test?
