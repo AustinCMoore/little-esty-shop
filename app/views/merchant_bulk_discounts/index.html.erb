@@ -11,7 +11,7 @@
 
 <div class="upcoming-holidays">
   <h2> Upcoming Holidays </h2>
-  <%= @holidays.each do |holiday| %>
+  <% @holidays.each do |holiday| %>
   <h3> <%= holiday.name %> </h3>
   <p> <%= holiday.date %> </p>
   <% end %>
