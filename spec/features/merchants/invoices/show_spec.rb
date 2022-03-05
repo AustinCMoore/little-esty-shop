@@ -117,7 +117,7 @@ describe "final project" do #marks solo work
 # When I visit my merchant invoice show page
 # Then I see the total revenue for my merchant from this invoice (not including discounts)
 # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
-  it "has a total discounted revenue" do
+  it "has a total revenue and discounted revenue for each merchant's cut of an invoice" do
     merchant_A = Merchant.create!(name: "Merchant A")
     merchant_B = Merchant.create!(name: "Merchant B")
     merchant_C = Merchant.create!(name: "Merchant C")
@@ -134,15 +134,29 @@ describe "final project" do #marks solo work
     discount_C2 = merchant_C.bulk_discounts.create!(percentage_discount: 0, quantity_threshold: 5)
 
     customer_A = Customer.create!(first_name: "Customer", last_name: "Alpha")
+    customer_B = Customer.create!(first_name: "Customer", last_name: "Beta")
 
     invoice_A1 = customer_A.invoices.create!(status: "completed")
+    invoice_B1 = customer_B.invoices.create!(status: "completed")
     invoice_A2 = customer_A.invoices.create!(status: "completed")
     invoice_A3 = customer_A.invoices.create!(status: "completed")
 
     transcation_A1_success = invoice_A1.transactions.create!(credit_card_number: "4654405418249632", result: "success")
+    transcation_B1_success = invoice_A1.transactions.create!(credit_card_number: "4654405418249632", result: "success")
     transcation_A2_fail = invoice_A2.transactions.create!(credit_card_number: "4654405418249632", result: "failed")
     transcation_A2_success = invoice_A2.transactions.create!(credit_card_number: "4654405418249632", result: "success")
     transcation_A3_fail = invoice_A3.transactions.create!(credit_card_number: "4654405418249632", result: "failed")
+
+    #Should be equal to invoice A1
+    #no discount applied, revenue = 99 (prove a discount can be zero)
+    invoice_item_B1_A1 = InvoiceItem.create!(invoice_id: invoice_B1.id, item_id: item_A1.id, quantity: 1, unit_price: 99, status: "shipped")
+    #discount B1 applied, revenue = 4000, discount = 800, expected = 3200 (prove the same invoice can apply different discounts for different items for the same merchant)
+    invoice_item_B1_B1 = InvoiceItem.create!(invoice_id: invoice_B1.id, item_id: item_B1.id, quantity: 20, unit_price: 200, status: "shipped")
+    #discount B2 applied, revenue = 9000, discount = 2700, expected = 6300 (prove the same invoice can apply different discounts for different items for the same merchant)
+    invoice_item_B1_B2 = InvoiceItem.create!(invoice_id: invoice_B1.id, item_id: item_B2.id, quantity: 30, unit_price: 300, status: "shipped")
+    #discount C1 applied, revenue = 10000000, discount = 10000000, expected = 0 (prove the upper limit, also provides easy to prove max/min values)
+    invoice_item_B1_C1 = InvoiceItem.create!(invoice_id: invoice_B1.id, item_id: item_C1.id, quantity: 1, unit_price: 10000000, status: "shipped")
+    #invoice A1 total revenue = 9599
 
     #one transaction, is successful, expect invoice to have revenue
     #no discount applied, revenue = 99 (prove a discount can be zero)
@@ -169,5 +183,66 @@ describe "final project" do #marks solo work
     #one transaction, fails, expect invoice to not have revenue
     invoice_item_A3_A1 = InvoiceItem.create!(invoice_id: invoice_A3.id, item_id: item_A1.id, quantity: 1, unit_price: 99, status: "shipped")
     #invoice A3 total revenue = 0
+
+    visit "/merchants/#{merchant_A.id}/invoices/#{invoice_B1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 99")
+      expect(page).to_have content("Total Revenue after Discounts: 99")
+    end
+
+    visit "/merchants/#{merchant_B.id}/invoices/#{invoice_B1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 13000")
+      expect(page).to_have content("Total Revenue after Discounts: 9500")
+    end
+
+    visit "/merchants/#{merchant_C.id}/invoices/#{invoice_B1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 0")
+      expect(page).to_have content("Total Revenue after Discounts: 0")
+    end
+
+    visit "/merchants/#{merchant_A.id}/invoices/#{invoice_A1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 99")
+      expect(page).to_have content("Total Revenue after Discounts: 99")
+    end
+
+    visit "/merchants/#{merchant_A.id}/invoices/#{invoice_A2.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 297")
+      expect(page).to_have content("Total Revenue after Discounts: 267.3") #267 or 268 if rounded up
+    end
+
+    visit "/merchants/#{merchant_A.id}/invoices/#{invoice_A3.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 0")
+      expect(page).to_have content("Total Revenue after Discounts: 0")
+    end
+
+    visit "/merchants/#{merchant_B.id}/invoices/#{invoice_A1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 13000")
+      expect(page).to_have content("Total Revenue after Discounts: 9500")
+    end
+
+    visit "/merchants/#{merchant_B.id}/invoices/#{invoice_A2.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 10100")
+      expect(page).to_have content("Total Revenue after Discounts: 8840")
+    end
+
+    visit "/merchants/#{merchant_C.id}/invoices/#{invoice_A1.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 0")
+      expect(page).to_have content("Total Revenue after Discounts: 0")
+    end
+
+    visit "/merchants/#{merchant_C.id}/invoices/#{invoice_A2.id}"
+    within ".revenue-totals" do
+      expect(page).to have_content("Total Revenue: 0")
+      expect(page).to_have content("Total Revenue after Discounts: 0")
+    end
   end
+
 end
