@@ -8,9 +8,9 @@ RSpec.describe "the merchant bulk discounts create page" do
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
 
     within ".new-discount" do
-      expect(page).to have_content("Percentage discount") #may be diff name
-      expect(page).to have_content("Quantity threshold") #may be diff name
-      expect(page).to have_button("Create Bulk discount") #may be diff name
+      expect(page).to have_content("Percentage discount")
+      expect(page).to have_content("Quantity threshold")
+      expect(page).to have_button("Create Bulk discount")
     end
   end
 
@@ -42,7 +42,7 @@ RSpec.describe "the merchant bulk discounts create page" do
     end
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
     expect(page).to have_content("Discount not created: Required information missing.")
-    expect(page).to have_button("Create Bulk discount") #may be diff name
+    expect(page).to have_button("Create Bulk discount")
   end
 
   it "cannot create a discount without a quantity_threshold" do
@@ -55,9 +55,6 @@ RSpec.describe "the merchant bulk discounts create page" do
     end
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
     expect(page).to have_content("Discount not created: Required information missing.")
-    expect(page).to have_button("Create Bulk discount") #may be diff name
+    expect(page).to have_button("Create Bulk discount")
   end
-
-  #does not accept strings test?
-  #does not accept floats? does not accept integers?
 end
