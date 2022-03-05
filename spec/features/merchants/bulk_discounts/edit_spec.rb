@@ -11,7 +11,7 @@ RSpec.describe "the merchant bulk discounts edit" do
     within ".discount-form" do
       expect(page).to have_field(:bulk_discount_percentage_discount, with: bulk_discount_1.percentage_discount)
       expect(page).to have_field(:bulk_discount_quantity_threshold, with: bulk_discount_1.quantity_threshold)
-      expect(page).to have_button('Update Discount')
+      expect(page).to have_button('Update Bulk discount')
     end
   end
 
@@ -23,7 +23,7 @@ RSpec.describe "the merchant bulk discounts edit" do
     within ".discount-form" do
       fill_in :bulk_discount_percentage_discount, with: 0.2
       fill_in :bulk_discount_quantity_threshold, with: 20
-      click_button "Update Discount"
+      click_button "Update Bulk discount"
     end
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}")
@@ -43,17 +43,18 @@ RSpec.describe "the merchant bulk discounts edit" do
     visit "/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}/edit"
 
     within ".discount-form" do
+      fill_in :bulk_discount_percentage_discount, with: ""
       fill_in :bulk_discount_quantity_threshold, with: 20
-      click_button "Update Discount"
+      click_button "Update Bulk discount"
     end
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}/edit")
-    expect(current_path).to have_content("Discount not updated: Required information missing.")
+    expect(page).to have_content("Discount not updated: Required information missing.")
 
     within ".discount-form" do
       expect(page).to have_field(:bulk_discount_percentage_discount, with: bulk_discount_1.percentage_discount)
       expect(page).to have_field(:bulk_discount_quantity_threshold, with: bulk_discount_1.quantity_threshold)
-      expect(page).to have_button('Update Discount')
+      expect(page).to have_button('Update Bulk discount')
     end
   end
 
@@ -64,16 +65,17 @@ RSpec.describe "the merchant bulk discounts edit" do
 
     within ".discount-form" do
       fill_in :bulk_discount_percentage_discount, with: 0.2
-      click_button "Update Discount"
+      fill_in :bulk_discount_quantity_threshold, with: ""
+      click_button "Update Bulk discount"
     end
 
     expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}/edit")
-    expect(current_path).to have_content("Discount not updated: Required information missing.")
-    
+    expect(page).to have_content("Discount not updated: Required information missing.")
+
     within ".discount-form" do
       expect(page).to have_field(:bulk_discount_percentage_discount, with: bulk_discount_1.percentage_discount)
       expect(page).to have_field(:bulk_discount_quantity_threshold, with: bulk_discount_1.quantity_threshold)
-      expect(page).to have_button('Update Discount')
+      expect(page).to have_button('Update Bulk discount')
     end
   end
 end
