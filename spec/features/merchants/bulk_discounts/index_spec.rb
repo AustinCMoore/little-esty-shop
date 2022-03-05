@@ -1,4 +1,5 @@
 require 'rails_helper'
+
 RSpec.describe "the merchant bulk discounts index" do
   it "exists" do
     merchant_1 = Merchant.create!(name: "Staples")
@@ -70,5 +71,18 @@ RSpec.describe "the merchant bulk discounts index" do
       expect(holiday_1.name).to appear_before(holiday_2.name)
       expect(holiday_2.name).to appear_before(holiday_3.name)
     end
+  end
+
+  it "has a link to create a new discount" do
+    merchant_1 = Merchant.create!(name: "Staples")
+
+    visit "/merchants/#{merchant_1.id}/bulk_discounts"
+
+    within ".create-discount" do
+      expect(page).to have_link("Create New Discount")
+      click_link "Create New Discount"
+    end
+
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
   end
 end
