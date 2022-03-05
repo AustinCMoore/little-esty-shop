@@ -89,6 +89,7 @@ RSpec.describe "the merchant bulk discounts index" do
   it "can delete a discount" do
     merchant_1 = Merchant.create!(name: "Staples")
     bulk_discount_1 = merchant_1.bulk_discounts.create!(percentage_discount: 0.1, quantity_threshold: 10)
+    bulk_discount_2 = merchant_1.bulk_discounts.create!(percentage_discount: 0.2, quantity_threshold: 20)
 
     visit "/merchants/#{merchant_1.id}/bulk_discounts"
 
@@ -96,14 +97,11 @@ RSpec.describe "the merchant bulk discounts index" do
       expect(page).to have_link("Discount ID: #{bulk_discount_1.id}")
       expect(page).to have_content("Discount %: #{bulk_discount_1.percentage_discount}")
       expect(page).to have_content("Qty to qualify: #{bulk_discount_1.quantity_threshold}")
-    end
-
-    within ".delete-discount" do
       expect(page).to have_link("Delete Discount")
       click_link "Delete Discount"
     end
 
-    expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/new")
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts")
 
     within ".bulk-discount-0" do
       expect(page).to_not have_link("Discount ID: #{bulk_discount_1.id}")
