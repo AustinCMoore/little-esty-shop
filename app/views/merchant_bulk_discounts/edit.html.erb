@@ -1,11 +1,5 @@
 <h1> Editing Discount <%= @bulk_discount.id %> </h1>
 
 <div class="discount-form">
-  <%= form_with model: [@merchant, @bulk_discount], local: true do |form| %>
-  <%= form.label :percentage_discount %>
-  <%= form.number_field :percentage_discount, step: :any %>
-  <%= form.label :quantity_threshold %>
-  <%= form.number_field :quantity_threshold %>
-  <%= form.submit%>
-  <% end %>
+  <%= render partial: 'form' %>
 </div>
