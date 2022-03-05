@@ -5,6 +5,7 @@
     <h3> <%= link_to "Discount ID: #{bulk_discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{bulk_discount.id}" %> </h3>
     <li> <%= "Discount %: #{bulk_discount.percentage_discount}" %> </li>
     <li> <%= "Qty to qualify: #{bulk_discount.quantity_threshold}" %> </li>
+    <li> <%= link_to "Delete Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{bulk_discount.id}", method: :delete %> </li>
   </div>
 <% end %>
 
