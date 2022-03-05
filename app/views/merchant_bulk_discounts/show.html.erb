@@ -4,3 +4,7 @@
   <h3> Discount %:  <%= @bulk_discount.percentage_discount %> </h3>
   <h3> Qty to qualify:  <%= @bulk_discount.quantity_threshold %> </h3>
 </div>
+
+<div class="edit-discount">
+  <h3> <%= link_to "Edit Discount", "/merchants/#{@merchant.id}/bulk_discounts/#{@bulk_discount.id}/edit" %> </h3>
+</div>

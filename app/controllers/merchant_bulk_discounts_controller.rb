@@ -31,6 +31,10 @@ class MerchantBulkDiscountsController < ApplicationController
     redirect_to "/merchants/#{merchant.id}/bulk_discounts"
   end
 
+  def edit
+
+  end
+
   private
 
   def discount_params
