@@ -20,4 +20,17 @@ RSpec.describe "the merchant bulk discounts show" do
       expect(page).to have_content("Qty to qualify: #{bulk_discount_1.quantity_threshold}")
     end
   end
+
+  it "has a link to edit the discount that routes to the edit page" do
+    merchant_1 = Merchant.create!(name: "Staples")
+    bulk_discount_1 = merchant_1.bulk_discounts.create!(percentage_discount: 0.1, quantity_threshold: 10)
+    visit "/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}"
+
+    within ".edit-discount" do
+      expect(page).to have_link("Edit Discount")
+      click_link "Edit Discount"
+    end
+
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/bulk_discounts/#{bulk_discount_1.id}/edit")
+  end
 end
