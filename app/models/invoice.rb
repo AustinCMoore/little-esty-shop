@@ -15,4 +15,16 @@ class Invoice < ApplicationRecord
   def self.not_completed
     where(:invoices => {status: 1}).order(created_at: :asc)
   end
+
+  def total_discounts_by_merchant(merchant_id)
+    invoice_items.joins(:bulk_discounts)
+    .where("invoice_items.quantity >= bulk_discounts.quantity_threshold AND bulk_discounts.merchant_id = ?", merchant_id)
+    .select("invoice_items.id, MAX((invoice_items.unit_price * invoice_items.quantity * bulk_discounts.percentage_discount)/100) AS discounted_revenue")
+    .group("invoice_items.id")
+    .sum(&:discounted_revenue)
+  end
+
+  def discounted_revenue_by_merchant(merchant_id)
+
+  end
 end
