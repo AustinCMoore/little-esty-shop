@@ -159,9 +159,9 @@ describe "final project" do
       invoice_item_A3_A1 = InvoiceItem.create!(invoice_id: invoice_A3.id, item_id: item_A1.id, quantity: 1, unit_price: 99, status: "shipped")
       #invoice A3 total revenue = 0
 
-      expect(invoice_B1.total_invoice_revenue).to eq(9599)
-      expect(invoice_A1.total_invoice_revenue).to eq(9599)
-      expect(invoice_A2.total_invoice_revenue).to eq(9107.3)
-      expect(invoice_A3.total_invoice_revenue).to eq(0)
+      expect(invoice_B1.total_discounted_invoice_revenue).to eq(9599)
+      expect(invoice_A1.total_discounted_invoice_revenue).to eq(9599)
+      expect(invoice_A2.total_discounted_invoice_revenue).to eq(9107.3)
+      expect(invoice_A3.total_discounted_invoice_revenue).to eq(0)
   end
 end
