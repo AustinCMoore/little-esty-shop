@@ -92,7 +92,7 @@ end
 
 describe "final project" do
   describe "instance methods" do
-    it ".total_invoice_revenue" do
+    it ".total_discounted_invoice_revenue" do
       merchant_A = Merchant.create!(name: "Merchant A")
       merchant_B = Merchant.create!(name: "Merchant B")
       merchant_C = Merchant.create!(name: "Merchant C")
@@ -114,13 +114,6 @@ describe "final project" do
       invoice_A1 = customer_A.invoices.create!(status: "completed")
       invoice_B1 = customer_B.invoices.create!(status: "completed")
       invoice_A2 = customer_A.invoices.create!(status: "completed")
-      invoice_A3 = customer_A.invoices.create!(status: "completed")
-
-      transcation_A1_success = invoice_A1.transactions.create!(credit_card_number: "4654405418249632", result: "success")
-      transcation_B1_success = invoice_A1.transactions.create!(credit_card_number: "4654405418249632", result: "success")
-      transcation_A2_fail = invoice_A2.transactions.create!(credit_card_number: "4654405418249632", result: "failed")
-      transcation_A2_success = invoice_A2.transactions.create!(credit_card_number: "4654405418249632", result: "success")
-      transcation_A3_fail = invoice_A3.transactions.create!(credit_card_number: "4654405418249632", result: "failed")
 
       #Should be equal to invoice A1
       #no discount applied, revenue = 99 (prove a discount can be zero)
@@ -133,7 +126,6 @@ describe "final project" do
       invoice_item_B1_C1 = InvoiceItem.create!(invoice_id: invoice_B1.id, item_id: item_C1.id, quantity: 1, unit_price: 10000000, status: "shipped")
       #invoice B1 total revenue = 9599
 
-      #one transaction, is successful, expect invoice to have revenue
       #no discount applied, revenue = 99 (prove a discount can be zero)
       invoice_item_A1_A1 = InvoiceItem.create!(invoice_id: invoice_A1.id, item_id: item_A1.id, quantity: 1, unit_price: 99, status: "shipped")
       #discount B1 applied, revenue = 4000, discount = 800, expected = 3200 (prove the same invoice can apply different discounts for different items for the same merchant)
@@ -144,24 +136,27 @@ describe "final project" do
       invoice_item_A1_C1 = InvoiceItem.create!(invoice_id: invoice_A1.id, item_id: item_C1.id, quantity: 1, unit_price: 10000000, status: "shipped")
       #invoice A1 total revenue = 9599
 
-      #two transactions, one successful one fail, expect invoice to have revenue
       #discount A1 applied, revenue = 297, discount = 29.7, expected = 267.3 (prove a discount that was zero can be triggered, but also give float value. From lecture, we do not need to test rounding up or down on a fraction of a penny)
       invoice_item_A2_A1 = InvoiceItem.create!(invoice_id: invoice_A2.id, item_id: item_A1.id, quantity: 3, unit_price: 99, status: "shipped")
       #no discount applied, revenue = 3800 (prove upper cutoff for a discount)
       invoice_item_A2_B1 = InvoiceItem.create!(invoice_id: invoice_A2.id, item_id: item_B1.id, quantity: 19, unit_price: 200, status: "shipped")
-      #discount B1 applied, revenue = 6300, discount = 1260, expected = 5040 (prove greater than a threshold will trigger a discount)
+      # discount B1 applied, revenue = 6300, discount = 1260, expected = 5040 (prove greater than a threshold will trigger a discount)
       invoice_item_A2_B2 = InvoiceItem.create!(invoice_id: invoice_A2.id, item_id: item_B2.id, quantity: 21, unit_price: 300, status: "shipped")
       #discount C1 applied, revenue = 10000000, discount = 10000000, expected = 0 (prove C1 always overwrites C2, provide easy to identify min/max values)
-      invoice_item_A2_C1 = InvoiceItem.create!(invoice_id: invoice_A2.id, item_id: item_C1.id, quantity: 10000000, unit_price: 10000000, status: "shipped")
+      invoice_item_A2_C1 = InvoiceItem.create!(invoice_id: invoice_A2.id, item_id: item_C1.id, quantity: 10, unit_price: 10000000, status: "shipped")
       #invoice A2 total revenue = 9107.3 (should round to either 91.07 or 91.08)
 
-      #one transaction, fails, expect invoice to not have revenue
-      invoice_item_A3_A1 = InvoiceItem.create!(invoice_id: invoice_A3.id, item_id: item_A1.id, quantity: 1, unit_price: 99, status: "shipped")
-      #invoice A3 total revenue = 0
+      expect(invoice_B1.total_discounts_by_merchant(merchant_A.id)).to eq(0)
+      expect(invoice_B1.total_discounts_by_merchant(merchant_B.id)).to eq(35.00)
+      expect(invoice_B1.total_discounts_by_merchant(merchant_C.id)).to eq(100000.00)
 
-      expect(invoice_B1.total_discounted_invoice_revenue).to eq(9599)
-      expect(invoice_A1.total_discounted_invoice_revenue).to eq(9599)
-      expect(invoice_A2.total_discounted_invoice_revenue).to eq(9107.3)
-      expect(invoice_A3.total_discounted_invoice_revenue).to eq(0)
+      expect(invoice_A1.total_discounts_by_merchant(merchant_A.id)).to eq(0)
+      expect(invoice_A1.total_discounts_by_merchant(merchant_B.id)).to eq(35.00)
+      expect(invoice_A1.total_discounts_by_merchant(merchant_C.id)).to eq(100000.00)
+
+      expect(invoice_A2.total_discounts_by_merchant(merchant_A.id)).to eq(0.29700000000000004)
+      expect(invoice_A2.total_discounts_by_merchant(merchant_B.id)).to eq(12.60)
+      expect(invoice_A2.total_discounts_by_merchant(merchant_C.id)).to eq(1000000.00)
+    end
   end
 end
