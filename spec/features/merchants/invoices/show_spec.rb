@@ -86,12 +86,12 @@ RSpec.describe "Merchant Invoices Show Page" do
     expect(page).to have_content("Status: #{@invoice_item_13.status}")
   end
 
-  xit "displays total revenue" do
+  it "displays total revenue" do
     @invoice_item_13 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 29, status: "shipped")
 
     visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
 
-    expect(page).to have_content("Total Revenue: 42")
+    expect(page).to have_content("Total Revenue: $0.42")
   end
 
   it "can change an item's status" do
@@ -167,56 +167,56 @@ describe "final project" do #marks solo work
 
     visit "/merchants/#{merchant_A.id}/invoices/#{invoice_B1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 0.99")
-      expect(page).to have_content("Total Revenue after Discounts: 0.99")
+      expect(page).to have_content("Total Revenue: $0.99")
+      expect(page).to have_content("Total Revenue after Discounts: $0.99")
     end
 
     visit "/merchants/#{merchant_B.id}/invoices/#{invoice_B1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 130.0")
-      expect(page).to have_content("Total Revenue after Discounts: 95.0")
+      expect(page).to have_content("Total Revenue: $130.00")
+      expect(page).to have_content("Total Revenue after Discounts: $95.00")
     end
 
     visit "/merchants/#{merchant_C.id}/invoices/#{invoice_B1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 100000.0")
-      expect(page).to have_content("Total Revenue after Discounts: 0.0")
+      expect(page).to have_content("Total Revenue: $100,000.0")
+      expect(page).to have_content("Total Revenue after Discounts: $0.00")
     end
 
     visit "/merchants/#{merchant_A.id}/invoices/#{invoice_A1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 0.99")
-      expect(page).to have_content("Total Revenue after Discounts: 0.99")
+      expect(page).to have_content("Total Revenue: $0.99")
+      expect(page).to have_content("Total Revenue after Discounts: $0.99")
     end
 
     visit "/merchants/#{merchant_A.id}/invoices/#{invoice_A2.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 2.97")
-      expect(page).to have_content("Total Revenue after Discounts: 2.67") #267 or 268 if rounded up
+      expect(page).to have_content("Total Revenue: $2.97")
+      expect(page).to have_content("Total Revenue after Discounts: $2.67") #267 or 268 if rounded up
     end
 
     visit "/merchants/#{merchant_B.id}/invoices/#{invoice_A1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 130")
-      expect(page).to have_content("Total Revenue after Discounts: 95")
+      expect(page).to have_content("Total Revenue: $130.00")
+      expect(page).to have_content("Total Revenue after Discounts: $95.00")
     end
 
     visit "/merchants/#{merchant_B.id}/invoices/#{invoice_A2.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 101")
-      expect(page).to have_content("Total Revenue after Discounts: 88.4")
+      expect(page).to have_content("Total Revenue: $101.00")
+      expect(page).to have_content("Total Revenue after Discounts: $88.40")
     end
 
     visit "/merchants/#{merchant_C.id}/invoices/#{invoice_A1.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 100000.0")
-      expect(page).to have_content("Total Revenue after Discounts: 0.0")
+      expect(page).to have_content("Total Revenue: $100,000.00")
+      expect(page).to have_content("Total Revenue after Discounts: $0.00")
     end
 
     visit "/merchants/#{merchant_C.id}/invoices/#{invoice_A2.id}"
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 1000000.0")
-      expect(page).to have_content("Total Revenue after Discounts: 0.0")
+      expect(page).to have_content("Total Revenue: $1,000,000.00")
+      expect(page).to have_content("Total Revenue after Discounts: $0.00")
     end
   end
 

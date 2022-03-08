@@ -48,7 +48,7 @@ RSpec.describe 'the admin invoice show' do
     expect(page).to have_content("#{@invoice_item_2.status}")
   end
 
-  xit "Total Revenue will be shown for each Invoice" do
+  it "Total Revenue will be shown for each Invoice" do
     visit "/admin/invoices/#{@invoice_1.id}"
 
     expect(page).to have_content(71)
@@ -130,31 +130,31 @@ describe "final project" do #marks solo work
     visit "/admin/invoices/#{invoice_B1.id}"
 
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 100130.99")
+      expect(page).to have_content("Total Revenue: $100,130.99")
     end
 
     within ".revenue-discounted" do
-      expect(page).to have_content("Total Revenue after Discounts: 95.99")
+      expect(page).to have_content("Total Revenue after Discounts: $95.99")
     end
 
     visit "/admin/invoices/#{invoice_A1.id}"
 
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 100130.99")
+      expect(page).to have_content("Total Revenue: $100,130.99")
     end
 
     within ".revenue-discounted" do
-      expect(page).to have_content("Total Revenue after Discounts: 95.99")
+      expect(page).to have_content("Total Revenue after Discounts: $95.99")
     end
 
     visit "/admin/invoices/#{invoice_A2.id}"
 
     within ".revenue-totals" do
-      expect(page).to have_content("Total Revenue: 1000103.97")
+      expect(page).to have_content("Total Revenue: $1,000,103.97")
     end
 
     within ".revenue-discounted" do
-      expect(page).to have_content("Total Revenue after Discounts: 91.07")
+      expect(page).to have_content("Total Revenue after Discounts: $91.07")
     end
   end
 end

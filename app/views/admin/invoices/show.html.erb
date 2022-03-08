@@ -15,10 +15,10 @@
 <p><b>Invoice Creation Date:</b> <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
 <p><b>Customer Name: </b> <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
 <div class="revenue-totals">
-  <%= "Total Revenue: #{@invoice_revenue}" %>
+  <%= "Total Revenue: #{number_to_currency(@invoice.admin_invoice_total_revenue)}" %>
 </div>
 <div class="revenue-discounted">
-  <%= "Total Revenue after Discounts: #{@discounted_revenue}" %>
+  <%= "Total Revenue after Discounts: #{number_to_currency(@invoice.admin_invoice_discounted_revenue)}" %>
 </div>
 
 <h2>Item Information:</h2>

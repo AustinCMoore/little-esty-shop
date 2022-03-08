@@ -6,8 +6,6 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     @invoice = Invoice.find(params[:id])
-    @invoice_revenue = ((@invoice.total_invoice_revenue).to_f/100).round(2)
-    @discounted_revenue = ((@invoice.total_invoice_revenue - @invoice.total_discounts).to_f/100).round(2)
   end
 
   def update
