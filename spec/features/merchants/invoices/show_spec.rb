@@ -86,13 +86,13 @@ RSpec.describe "Merchant Invoices Show Page" do
     expect(page).to have_content("Status: #{@invoice_item_13.status}")
   end
 
-  # it "displays total revenue" do
-  #   @invoice_item_13 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 29, status: "shipped")
-  #
-  #   visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
-  #
-  #   expect(page).to have_content("Total Revenue: 42")
-  # end
+  xit "displays total revenue" do
+    @invoice_item_13 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 29, status: "shipped")
+
+    visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
+
+    expect(page).to have_content("Total Revenue: 42")
+  end
 
   it "can change an item's status" do
     visit "/merchants/#{@merchant_1.id}/invoices/#{@invoice_1.id}"
@@ -219,12 +219,6 @@ describe "final project" do #marks solo work
       expect(page).to have_content("Total Revenue after Discounts: 0.0")
     end
   end
-
-#   Merchant Invoice Show Page: Link to applied discounts
-#
-# As a merchant
-# When I visit my merchant invoice show page
-# Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
 
   it "has a link next to a item that goes to the show page for each applied discount" do
     merchant_A = Merchant.create!(name: "Merchant A")

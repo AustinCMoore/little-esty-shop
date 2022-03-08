@@ -14,7 +14,12 @@
   <% end %>
 <p><b>Invoice Creation Date:</b> <%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
 <p><b>Customer Name: </b> <%= @invoice.customer.first_name %> <%= @invoice.customer.last_name %></p>
-<p><b>Total Invoice Revenue: </b> $<%= @invoice.total_invoice_revenue %>
+<div class="revenue-totals">
+  <%= "Total Revenue: #{@invoice_revenue}" %>
+</div>
+<div class="revenue-discounted">
+  <%= "Total Revenue after Discounts: #{@discounted_revenue}" %>
+</div>
 
 <h2>Item Information:</h2>
 <% @invoice.invoice_items.each do |invoice_item| %>

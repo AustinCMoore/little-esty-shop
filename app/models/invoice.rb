@@ -9,7 +9,7 @@ class Invoice < ApplicationRecord
   validates_presence_of :status
 
   def total_invoice_revenue
-    invoice_items.sum("unit_price * quantity")
+    invoice_items.sum("(unit_price * quantity)")
   end
 
   def self.not_completed
@@ -31,5 +31,13 @@ class Invoice < ApplicationRecord
     .joins(:item)
     .where("items.merchant_id = ?", merchant_id)
     .sum(&:revenue)
+  end
+
+  def total_discounts
+    invoice_items.joins(:bulk_discounts)
+    .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
+    .select("invoice_items.id, MAX((invoice_items.unit_price * invoice_items.quantity * bulk_discounts.percentage_discount)) AS discounted_revenue")
+    .group("invoice_items.id")
+    .sum(&:discounted_revenue)
   end
 end
