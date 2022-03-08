@@ -70,7 +70,7 @@ RSpec.describe Invoice, type: :model do
       @transcation_12 = @invoice_12.transactions.create!(credit_card_number: "4654405418249635", result: "failed")
     end
 
-    xit ".total_invoice_revenue" do
+    it ".total_invoice_revenue" do
       @invoice_item_13 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 1, unit_price: 13, status: "shipped")
       @invoice_item_14 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_2.id, quantity: 2, unit_price: 29, status: "shipped")
 

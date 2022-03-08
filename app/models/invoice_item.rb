@@ -6,11 +6,12 @@ class InvoiceItem < ApplicationRecord
   has_one :merchant, through: :item
   has_many :bulk_discounts, through: :merchant
 
-  enum status: {"pending" => 0, "packaged" => 1, "shipped" => 2}
-
   validates_presence_of :quantity
+  validates_numericality_of :quantity, only_integer: true
   validates_presence_of :unit_price
+  validates_numericality_of :unit_price
   validates_presence_of :status
+  enum status: {"pending" => 0, "packaged" => 1, "shipped" => 2}
 
   def find_bulk_discount
     bulk_discounts

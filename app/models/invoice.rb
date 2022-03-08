@@ -7,7 +7,6 @@ class Invoice < ApplicationRecord
   has_many :bulk_discounts, through: :merchants
 
   validates_presence_of :status
-
   enum status: {"cancelled" => 0, "in progress" => 1, "completed" => 2}
 
   def total_invoice_revenue

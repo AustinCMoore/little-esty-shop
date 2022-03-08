@@ -6,12 +6,12 @@ class Item < ApplicationRecord
   has_many :customers, through: :invoices
   has_many :transactions, through: :invoices
 
-  enum status: {"Disabled" => 0, "Enabled" => 1}
-
   validates_presence_of :name
   validates_presence_of :description
   validates_presence_of :unit_price
+  validates_numericality_of :unit_price
   validates_presence_of :status
+  enum status: {"Disabled" => 0, "Enabled" => 1}
 
   def best_day
     invoices.joins(:invoice_items, :transactions)
