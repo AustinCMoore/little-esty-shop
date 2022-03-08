@@ -1,8 +1,10 @@
 class Item < ApplicationRecord
-  has_many :invoice_items
-  has_many :invoices, through: :invoice_items
   belongs_to :merchant
   has_many :bulk_discounts, through: :merchant
+  has_many :invoice_items
+  has_many :invoices, through: :invoice_items
+  has_many :customers, through: :invoices
+  has_many :transactions, through: :invoices
 
   enum status: {"Disabled" => 0, "Enabled" => 1}
 

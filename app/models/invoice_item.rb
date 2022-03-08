@@ -1,7 +1,10 @@
 class InvoiceItem < ApplicationRecord
   belongs_to :invoice
+  has_one :customer, through: :invoice
+  has_many :transactions, through: :invoice
   belongs_to :item
-  has_many :bulk_discounts, through: :item
+  has_one :merchant, through: :item
+  has_many :bulk_discounts, through: :merchant
 
   enum status: {"pending" => 0, "packaged" => 1, "shipped" => 2}
 
