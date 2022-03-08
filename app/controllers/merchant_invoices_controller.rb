@@ -8,8 +8,6 @@ class MerchantInvoicesController < ApplicationController
   def show
     @merchant = Merchant.find(params[:merchant_id])
     @invoice = Invoice.find(params[:id])
-    @invoice_revenue = ((@invoice.total_revenue_by_merchant(params[:merchant_id])).to_f/100).round(2)
-    @discounted_revenue = ((@invoice.total_revenue_by_merchant(params[:merchant_id]) - @invoice.total_discounts_by_merchant(params[:merchant_id])).to_f/100).round(2)
   end
 
   def update

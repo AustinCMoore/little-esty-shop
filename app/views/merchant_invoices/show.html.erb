@@ -28,6 +28,6 @@
 <% end %>
 
 <div class="revenue-totals">
-  <%= "Total Revenue: #{@invoice_revenue}" %>
-  <%= "Total Revenue after Discounts: #{@discounted_revenue}" %>
+  <%= "Total Revenue: #{number_to_currency(@invoice.merchant_invoice_revenue(@merchant.id))}" %>
+  <%= "Total Revenue after Discounts: #{number_to_currency(@invoice.merchant_invoice_discounted_revenue(@merchant.id))}" %>
 </div>
