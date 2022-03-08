@@ -8,4 +8,11 @@ class InvoiceItem < ApplicationRecord
   validates_presence_of :quantity
   validates_presence_of :unit_price
   validates_presence_of :status
+
+  def find_bulk_discount
+    bulk_discounts
+    .where('quantity_threshold <= ?', quantity)
+    .order('bulk_discounts.percentage_discount')
+    .last
+  end
 end

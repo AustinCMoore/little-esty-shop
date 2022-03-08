@@ -267,8 +267,7 @@ describe "final project" do #marks solo work
     end
 
     visit "/merchants/#{merchant_B.id}/invoices/#{invoice_A1.id}"
-
-    within ".invoice-item-0" do
+    within ".invoice-item-1" do
       expect(page).to_not have_link("This item applies for discount: #{discount_A1.id}")
       expect(page).to have_link("This item applies for discount: #{discount_B1.id}")
       expect(page).to_not have_link("This item applies for discount: #{discount_B2.id}")
@@ -276,7 +275,7 @@ describe "final project" do #marks solo work
       expect(page).to_not have_link("This item applies for discount: #{discount_C2.id}")
     end
 
-    within ".invoice-item-1" do
+    within ".invoice-item-2" do
       expect(page).to_not have_link("This item applies for discount: #{discount_A1.id}")
       expect(page).to_not have_link("This item applies for discount: #{discount_B1.id}")
       expect(page).to have_link("This item applies for discount: #{discount_B2.id}")
@@ -285,7 +284,7 @@ describe "final project" do #marks solo work
     end
 
     visit "/merchants/#{merchant_C.id}/invoices/#{invoice_A1.id}"
-    within ".invoice-item-0" do
+    within ".invoice-item-3" do
       expect(page).to_not have_link("This item applies for discount: #{discount_A1.id}")
       expect(page).to_not have_link("This item applies for discount: #{discount_B1.id}")
       expect(page).to_not have_link("This item applies for discount: #{discount_B2.id}")

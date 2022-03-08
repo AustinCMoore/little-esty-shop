@@ -43,10 +43,10 @@ RSpec.describe InvoiceItem, type: :model do
       invoice_item_A1_C1 = InvoiceItem.create!(invoice_id: invoice_A1.id, item_id: item_C1.id, quantity: 1, unit_price: 10000000, status: "shipped")
       #invoice A1 total revenue = 9599
 
-      expect(invoice_item_A1_A1.find_bulk_discount).to eq([])
-      expect(invoice_item_A1_B1.find_bulk_discount).to eq([discount_B1])
-      expect(invoice_item_A1_B2.find_bulk_discount).to eq([discount_B2])
-      expect(invoice_item_A1_C1.find_bulk_discount).to eq([discount_C1])
+      expect(invoice_item_A1_A1.find_bulk_discount).to eq(nil)
+      expect(invoice_item_A1_B1.find_bulk_discount).to eq(discount_B1)
+      expect(invoice_item_A1_B2.find_bulk_discount).to eq(discount_B2)
+      expect(invoice_item_A1_C1.find_bulk_discount).to eq(discount_C1)
     end
   end
 end
