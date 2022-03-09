@@ -1,4 +1,4 @@
-# [Little Esty Shop](https://peaceful-beach-74579.herokuapp.com/)
+# [Little Esty Shop](https://fathomless-stream-92676.herokuapp.com/)
 <div id="top"></div>
 
 <!-- ABOUT THE PROJECT -->
@@ -10,6 +10,15 @@ This repo was written as part of the Turing School of Software Design's group pr
 * Utilize advanced routing techniques including namespacing to organize and group like functionality together.
 * Utilize advanced active record techniques to perform complex database queries.
 * Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code.
+
+Additionally, each of us were individually tasked with adding a feature to our website for the solo project evaluation requirement. This feature was to add functionality for merchants to create bulk discounts for their items. A “bulk discount” is a discount based on the quantity of items the customer is buying, for example “20% off orders of 10 or more items”. The learning goals for this portion included: 
+
+* Write migrations to create tables and relationships between tables
+* Implement CRUD functionality for a resource using forms (form_tag or form_with), buttons, and links
+* Use MVC to organize code effectively, limiting the amount of logic included in views and controllers
+* Use built-in ActiveRecord methods to join multiple tables of data, make calculations, and group data based on one or more attributes
+* Write model tests that fully cover the data logic of the application
+* Write feature tests that fully cover the functionality of the application
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -40,18 +49,24 @@ This project requires Ruby 2.7.4.
 <!-- USAGE EXAMPLES -->
 ## Database Schema
 
-![image](https://user-images.githubusercontent.com/92219945/156466250-be6d1785-4bba-4b0b-9e88-674e1b401c95.png)
+![image](https://user-images.githubusercontent.com/92219945/157352010-663790ce-2566-43ec-b38a-a1f289d0ab53.png)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
+<!-- ROADMAP -->
+## Evaluation Criteria
 
+<li> <a href="https://github.com/turingschool-examples/little-esty-shop/blob/main/doc/user_stories.md" title="Group Project">Group Project</a> </li>
+<li> <a href="https://backend.turing.edu/module2/projects/bulk_discounts" title="Solo Project">Solo Project</a> </li>
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Self Evaluation
 
 Our team was extremely pleased with not only our progress but our process. We had instant chemistry and complementary skills that made giving and receiving feedback fun and informative. By balancing our intellectual curiosity with tracking our progress using GitHub projects, we were able to not only complete all project requirements well before the deadline but refactor each other's work and learn new approaches to similar problems. Ultimately this process of giving and receiving feedback refined our product and strengthened our coding skills as individuals. 
 
-If this sort of collaboration would benefit your team, please scroll down to get in contact with us and schedule an interview!
+For the individual portion of this assignment, I was extremely pleased with my thorough testing and activerecord. While I believe significant improvements could be made to my view page, it is all functional and uses minimum logic. I plan to expand upon this project to make it more pleasant for a user to visit and to grow my front end skills over the intermission.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
